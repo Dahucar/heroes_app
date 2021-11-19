@@ -6,7 +6,7 @@ import { appRouting } from '../app/app.routing';
 
 // components.
 import { AppComponent } from './app.component';
-import { HeroScreenComponent } from './components/hero-screen/hero-screen.component';
+import { ListadoDeHeroesComponent } from './components/listado-de-heroes/listado-de-heroes.component';
 
 // services.
 import { HeroService } from './services/hero.service';
@@ -14,7 +14,7 @@ import { HeroService } from './services/hero.service';
 @NgModule({
   declarations: [
     AppComponent,
-    HeroScreenComponent,
+    ListadoDeHeroesComponent,
   ],
   imports: [
     BrowserModule, 

@@ -1,12 +1,12 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
-import { HeroScreenComponent } from './components/hero-screen/hero-screen.component';
+import { ListadoDeHeroesComponent } from './components/listado-de-heroes/listado-de-heroes.component';
 
 const appRoutes: Routes = [
-    {path: '', component: HeroScreenComponent},
-    {path: 'inicio', component: HeroScreenComponent},
-    {path: '**', component: HeroScreenComponent}
+    {path: '', component: ListadoDeHeroesComponent},
+    {path: 'inicio', component: ListadoDeHeroesComponent},
+    {path: '**', component: ListadoDeHeroesComponent}
 ];
 
 @NgModule({
