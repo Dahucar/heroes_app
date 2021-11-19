@@ -16,7 +16,8 @@ import { Heroe } from 'src/app/models/hero';
 export class ListadoDeHeroesComponent implements OnInit {
 
   heroes$: Observable<Array<Heroe>>;
-  public title: string;
+  public title: string = "";
+  public searchString: string = "";
   public heroesList: Array<Heroe> = [];
 
   constructor(
@@ -27,13 +28,20 @@ export class ListadoDeHeroesComponent implements OnInit {
     this.heroService.getHeroes();
   }
 
+  getHeroService(){
+    return this.heroService;
+  }
+
   ngOnInit(): void {
-    this.heroes$.subscribe((data: any) => {
+    this.heroes$.subscribe((data: any) => this.heroesList = data.heroes);
+  }
 
-      console.log('data: ', data.heroes);
+  prevPage() {
+    this.heroService.getHeroes(this.searchString, this.heroService.page - 1);
+  }
 
-      this.heroesList = data.heroes
-    });
+  nextPage() {
+    this.heroService.getHeroes(this.searchString, this.heroService.page + 1);
   }
 
 }
