@@ -2,3 +2,18 @@
 <div class="mb-3">
     <input type="email" class="form-control" id="searchHero" placeholder="Búsqueda de Super-Héroe">
 </div>
+
+<div class="row">
+    <div *ngFor="let heroe of heroesList;" class="col-xs-12 col-sm-6 col-md-3">
+        <a class="hero-entry" [style.background-image]="'url(' + heroe.thumbnail.path + '.' + heroe.thumbnail.extension + ')'">
+            <span>{{heroe.name}}</span>
+        </a>
+    </div>
+
+    <div class="paginator col-xs-12">
+        <a class="paginator-prev" (click)="prevPage()" *ngIf="getHeroService().page > 0">Prev</a>
+            Página {{getHeroService().page + 1}} de {{getHeroService().total}}
+        <a class="paginator-next" (click)="nextPage()" *ngIf="getHeroService().page < getHeroService().total - 1">Next</a>
+    </div>
+
+</div>
