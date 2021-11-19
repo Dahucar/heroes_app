@@ -16,7 +16,8 @@ export class ListadoDeHeroesComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.title = this.heroService.testMethod();
+    const heroes = this.heroService.getHeroes();
+    console.log(heroes);
   }
 
 }
