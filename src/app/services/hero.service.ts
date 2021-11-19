@@ -30,8 +30,10 @@ export class HeroService {
           this.page = page;
         }
 
-        const nameStart = + (nameStartsWith ? ('&nameStartsWith=' + nameStartsWith) : '');
-        const url: string = `${this.apiUrl}/characters?apikey=${this.apiKey}&offset=${(this.page * this.step)}${nameStart}`;
+        const offset: number = this.page * this.step;
+        const nameStart: string = nameStartsWith ? `&nameStartsWith=${nameStartsWith}` : '';
+        const url: string = `${this.apiUrl}/characters?apikey=${this.apiKey}&offset=${offset}${nameStart}`;
+
         this.http.get<any>(url).subscribe(response => {
             this.total = Math.ceil(response.data.total / this.step);
             const data = response.data.results.map(result => 
@@ -58,4 +60,7 @@ export class HeroService {
         return this.teams.get(id) !== undefined ? this.teams.get(id) : '';
     }
 
+    resetPager() {
+        this.page = 0;
+    }
 }

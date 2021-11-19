@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-
+import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 
@@ -21,11 +21,23 @@ export class ListadoDeHeroesComponent implements OnInit {
   public heroesList: Array<Heroe> = [];
 
   constructor(
+    private router: Router,
     private heroService: HeroService,
     private heroesStore: Store<{ heroes: Array<Heroe> }>
   ) {
     this.heroes$ = this.heroesStore.select('heroes');
     this.heroService.getHeroes();
+  }
+  
+  submitSearch() {
+    console.log(this.searchString);
+
+    this.heroService.resetPager();
+    this.heroService.getHeroes(this.searchString);
+  }
+
+  go_to(id: string){
+    this.router.navigateByUrl('/heroe/'+id);
   }
 
   getHeroService(){

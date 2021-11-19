@@ -1,11 +1,13 @@
 <h1 class="text-center bg-danger text-white">Heroes App</h1>
-<div class="mb-3">
-    <input type="email" class="form-control" id="searchHero" placeholder="Búsqueda de Super-Héroe">
-</div>
-
 <div class="row">
+    <form (ngSubmit)="submitSearch()" class="mb-2">
+        <div class="form-group col-xs-12">
+            <input type="text" [(ngModel)]="searchString" name="searchString" class="form-control" id="search" placeholder="Búsqueda de super-héroe">
+        </div>
+    </form>
+
     <div *ngFor="let heroe of heroesList;" class="col-xs-12 col-sm-6 col-md-3">
-        <a class="hero-entry" [style.background-image]="'url(' + heroe.thumbnail.path + '.' + heroe.thumbnail.extension + ')'">
+        <a class="hero-entry" (click)="go_to(heroe.id)"  [style.background-image]="'url(' + heroe.thumbnail.path + '.' + heroe.thumbnail.extension + ')'">
             <span>{{heroe.name}}</span>
         </a>
     </div>
@@ -15,5 +17,4 @@
             Página {{getHeroService().page + 1}} de {{getHeroService().total}}
         <a class="paginator-next" (click)="nextPage()" *ngIf="getHeroService().page < getHeroService().total - 1">Next</a>
     </div>
-
 </div>

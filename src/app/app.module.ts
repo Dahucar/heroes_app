@@ -14,11 +14,13 @@ import { ListadoDeHeroesComponent } from './components/listado-de-heroes/listado
 
 // services.
 import { HeroService } from './services/hero.service';
+import { HeroProfileComponent } from './components/hero-profile/hero-profile.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     ListadoDeHeroesComponent,
+    HeroProfileComponent,
   ],
   imports: [
     BrowserModule, 

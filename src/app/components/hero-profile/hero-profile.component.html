@@ -1,0 +1,15 @@
+<ng-container *ngIf="heroe">
+    <h1 class="text-center">{{heroe.name }}</h1>
+    <a class="goback" (click)="goBack()">Atrás</a>
+    <div class="row heroe-profile">
+        <div class="col-xs-12 col-sm-6 col-md-4">
+            <img [src]="heroe.thumbnail.path + '.' + heroe.thumbnail.extension">
+        </div>
+        <div class="col-xs-12 col-sm-6 col-md-8">
+            <h3>Descripción</h3>
+            <p>{{heroe.description}}</p>
+            <p class="modified">{{heroe.modified | date:'fullDate'}}, {{heroe.modified | date:'shortTime'}}</p>
+            <p *ngIf="team!=undefined && team!=''">Acabas de clasificar a tu héroe en el equipo <b [style.color]="heroesService.group_colors[team]">{{team}}</b></p>
+        </div>
+    </div>
+</ng-container>
