@@ -4,6 +4,10 @@ import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http'; 
 import { appRouting } from '../app/app.routing'; 
 
+// store.
+import { StoreModule } from '@ngrx/store';
+import { counterReducer, heroReducer } from './store/heroes.reducer';
+
 // components.
 import { AppComponent } from './app.component';
 import { ListadoDeHeroesComponent } from './components/listado-de-heroes/listado-de-heroes.component';
@@ -18,13 +22,12 @@ import { HeroService } from './services/hero.service';
   ],
   imports: [
     BrowserModule, 
+    StoreModule.forRoot({ count: counterReducer, heroes: heroReducer }),
     appRouting,
     FormsModule,
     HttpClientModule,
   ],
-  providers: [
-    HeroService
-  ],
+  providers: [HeroService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
