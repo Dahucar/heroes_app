@@ -3,6 +3,10 @@ import { ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
 import { HeroService } from '../../services/hero.service';
 import { Heroe } from  '../../models/hero';
+import { ModalPollComponent } from '../modal-poll/modal-poll.component';
+import { Store } from '@ngrx/store';
+import { Observable } from 'rxjs';
+import { deleteSelectedHero } from '../../store/heroes.actions';
 
 @Component({
   selector: 'app-hero-profile',
@@ -11,35 +15,35 @@ import { Heroe } from  '../../models/hero';
   providers: [ HeroService ]
 })
 export class HeroProfileComponent implements OnInit {
-  @ViewChild('modal') modal;
+  @ViewChild('modal') modal: ModalPollComponent;
+  public subscrip;
   public heroe: Heroe;
   public question_modal: string;
   public team:string = "";
+  public heroes$: Observable<Array<Heroe>> = this._heroesStore.select('heroes');
 
   constructor(
     private _location: Location,
     private _activeRouter: ActivatedRoute,
     private _heroService: HeroService,
+    private _heroesStore: Store<{ heroes: Array<Heroe> }>
   ) { }
 
   ngOnInit(): void {
-    this._activeRouter.params.subscribe(params => {
-      const id = params['id'];
-      this._heroService.getHeroe(id).subscribe(response => {
-        const temp = response.data.results[0];
-        this.heroe = new Heroe(
-          temp.id, 
-          temp.name, 
-          temp.description, 
-          temp.modified, 
-          temp.thumbnail, 
-          temp.resourceURI, 
-          this._heroService.getTeamColor(temp.id)
-        );
-
-        this.team = this.heroe.teamColor;
-      });
+    this._activeRouter.params.subscribe(params => this._heroService.getHeroeWithState(params['id']));
+    this.subscrip = this.heroes$.subscribe(({ selectedHero, teamHeroes }: any) => {
+      if(selectedHero !== null){
+        this.heroe = selectedHero;
+        this.team = teamHeroes[this.heroe.id]
+          ? teamHeroes[this.heroe.id]
+          : '';
+      }
     });
+  }
+
+  ngOnDestroy(){
+    this._heroesStore.dispatch(deleteSelectedHero({ payload: true }));
+    this.subscrip.unsubscribe();
   }
 
   getHeroService(){

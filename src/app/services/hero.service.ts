@@ -54,6 +54,23 @@ export class HeroService {
         return this._http.get<any>(url);
     }
 
+    getHeroeWithState(id: string) {
+        const url: string = `${this.apiUrl}/characters/${id}?apikey=${this.apiKey}`;
+        this._http.get<any>(url).subscribe(response => {
+            const heroById = response.data.results[0];
+            const hero = new Heroe(
+                heroById.id, 
+                heroById.name, 
+                heroById.description, 
+                heroById.modified, 
+                heroById.thumbnail, 
+                heroById.resourceURI, 
+                this.getTeamColor(heroById.id)
+            );
+            this._heroesStore.dispatch(findHeroById({ payload: hero }));
+        });
+    }
+
     getTeamColor(id: string): string {
         return this.teams.get(id) !== undefined ? this.teams.get(id) : '';
     }

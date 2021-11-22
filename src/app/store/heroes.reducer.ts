@@ -1,5 +1,5 @@
 import { createReducer, on } from '@ngrx/store';
-import { saveHeroes, addHeroTeam, findHeroById } from './heroes.actions';
+import { saveHeroes, addHeroTeam, findHeroById, deleteSelectedHero } from './heroes.actions';
 import { Heroe } from '../models/hero'; 
 
 type heroStateType = {
@@ -15,8 +15,12 @@ const _heroReducer = createReducer(
   on(
     saveHeroes, 
     addHeroTeam,
-    findHeroById, 
+    findHeroById,
+    deleteSelectedHero,
     (state, { type, payload }) => {
+
+      console.log('state: ', state)
+
       switch (type) {
         case '[Hero Component] SaveHeroes':
           return {
@@ -34,7 +38,12 @@ const _heroReducer = createReducer(
         case '[Hero Component] FindHero':
           return {
             ...state, 
-            selectedHero: payload
+            selectedHero: { ...payload }
+          };
+        case '[Hero Component] DeleteSelectedHero':
+          return {
+            ...state, 
+            selectedHero: payload && null
           };
       
         default:
