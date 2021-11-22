@@ -10,9 +10,9 @@ import { heroReducer } from './store/heroes.reducer';
 
 // components.
 import { AppComponent } from './app.component';
-import { ListadoDeHeroesComponent } from './components/listado-de-heroes/listado-de-heroes.component';
-import { HeroProfileComponent } from './components/hero-profile/hero-profile.component';
-import { ModalPollComponent } from './components/modal-poll/modal-poll.component';
+// import { ListadoDeHeroesComponent } from './components/listado-de-heroes/listado-de-heroes.component';
+// import { HeroProfileComponent } from './components/hero-profile/hero-profile.component';
+// import { ModalPollComponent } from './components/modal-poll/modal-poll.component';
 
 // services.
 import { HeroService } from './services/hero.service';
@@ -20,9 +20,9 @@ import { HeroService } from './services/hero.service';
 @NgModule({
   declarations: [
     AppComponent,
-    ListadoDeHeroesComponent,
-    HeroProfileComponent,
-    ModalPollComponent,
+    // ListadoDeHeroesComponent,
+    // HeroProfileComponent,
+    // ModalPollComponent,
   ],
   imports: [
     BrowserModule, 
