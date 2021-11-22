@@ -14,3 +14,8 @@ export const findHeroById = createAction(
     '[Hero Component] FindHero',
     props<{ payload }>()
 );
+
+export const deleteSelectedHero = createAction(
+    '[Hero Component] DeleteSelectedHero',
+    props<{ payload }>()
+);
