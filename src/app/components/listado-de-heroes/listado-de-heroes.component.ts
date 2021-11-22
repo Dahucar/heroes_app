@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, DoCheck, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
@@ -13,47 +13,52 @@ import { Heroe } from 'src/app/models/hero';
   styleUrls: ['./listado-de-heroes.component.css'],
   providers: [ HeroService ]
 })
-export class ListadoDeHeroesComponent implements OnInit {
-
-  heroes$: Observable<Array<Heroe>>;
-  public title: string = "";
+export class ListadoDeHeroesComponent implements OnInit, OnDestroy {
+  public subscrip: any;
   public searchString: string = "";
   public heroesList: Array<Heroe> = [];
+  public currentPage: number = this._heroService.page;
+  public heroes$: Observable<Array<Heroe>> = this._heroesStore.select('heroes');
 
   constructor(
-    private router: Router,
-    private heroService: HeroService,
-    private heroesStore: Store<{ heroes: Array<Heroe> }>
-  ) {
-    this.heroes$ = this.heroesStore.select('heroes');
-    this.heroService.getHeroes();
-  }
-  
-  submitSearch() {
-    console.log(this.searchString);
+    private _router: Router,
+    private _heroService: HeroService,
+    private _heroesStore: Store<{ heroes: Array<Heroe> }>
+  ) {}
 
-    this.heroService.resetPager();
-    this.heroService.getHeroes(this.searchString);
+  ngOnInit(): void {
+    this._heroService.getHeroes();
+    this.subscrip = this.heroes$.subscribe(({ heroes, teamHeroes }: any) => {
+      this.heroesList = heroes.map((hero: Heroe) => {
+        let teamColor = teamHeroes[hero.id] ? teamHeroes[hero.id] : '';
+        return { ...hero, teamColor }
+      });
+    });
+  }
+
+  ngOnDestroy(){
+    this.subscrip.unsubscribe();
+  }
+
+  submitSearch() {
+    this._heroService.resetPager();
+    this._heroService.getHeroes(this.searchString);
   }
 
   go_to(id: string){
-    this.router.navigateByUrl('/heroe/'+id);
+    this._router.navigateByUrl('/heroe/'+id);
   }
 
   getHeroService(){
-    return this.heroService;
-  }
-
-  ngOnInit(): void {
-    this.heroes$.subscribe((data: any) => this.heroesList = data.heroes);
+    return this._heroService;
   }
 
   prevPage() {
-    this.heroService.getHeroes(this.searchString, this.heroService.page - 1);
+    this._heroService.getHeroes(this.searchString, this._heroService.page - 1);
   }
 
   nextPage() {
-    this.heroService.getHeroes(this.searchString, this.heroService.page + 1);
+    this._heroService.getHeroes(this.searchString, this._heroService.page + 1);
   }
 
 }

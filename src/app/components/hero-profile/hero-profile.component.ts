@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { Router, ActivatedRoute } from '@angular/router';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
 import { HeroService } from '../../services/hero.service';
 import { Heroe } from  '../../models/hero';
@@ -11,26 +11,22 @@ import { Heroe } from  '../../models/hero';
   providers: [ HeroService ]
 })
 export class HeroProfileComponent implements OnInit {
+  @ViewChild('modal') modal;
   public heroe: Heroe;
+  public question_modal: string;
   public team:string = "";
 
   constructor(
-    private router: Router,
-    private location: Location,
-    private activeRouter: ActivatedRoute,
-    private heroService: HeroService
+    private _location: Location,
+    private _activeRouter: ActivatedRoute,
+    private _heroService: HeroService,
   ) { }
 
   ngOnInit(): void {
-    this.activeRouter.params.subscribe(params => {
+    this._activeRouter.params.subscribe(params => {
       const id = params['id'];
-      console.log({ id })
-
-      this.heroService.getHeroe(id).subscribe(response => {
-        
+      this._heroService.getHeroe(id).subscribe(response => {
         const temp = response.data.results[0];
-        console.log(temp);
-
         this.heroe = new Heroe(
           temp.id, 
           temp.name, 
@@ -38,16 +34,30 @@ export class HeroProfileComponent implements OnInit {
           temp.modified, 
           temp.thumbnail, 
           temp.resourceURI, 
-          this.heroService.getTeamColor(temp.id)
+          this._heroService.getTeamColor(temp.id)
         );
-        this.team = this.heroe.teamColor;
 
+        this.team = this.heroe.teamColor;
       });
     });
   }
 
+  getHeroService(){
+    return this._heroService;
+  }
+
+  getTeam(team):void{
+    this.team = team;
+    this._heroService.teams.set(this.heroe.id, this.team);
+  }
+
+  launchModal():void{
+    this.question_modal="¿En cual grupo quieres colocar a tu súper héroe?";
+    this.modal.toggle_modal();
+  }
+
   goBack(){
-    this.location.back();
+    this._location.back();
   }
 
 }

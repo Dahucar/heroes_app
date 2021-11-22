@@ -1,32 +1,49 @@
 import { createReducer, on } from '@ngrx/store';
-import { increment, decrement, reset, saveHeroes } from './heroes.actions';
+import { saveHeroes, addHeroTeam, findHeroById } from './heroes.actions';
 import { Heroe } from '../models/hero'; 
 
 type heroStateType = {
-  heroes: Array<Heroe>
+  heroes: Array<Heroe>,
+  teamHeroes: Object,
+  selectedHero: Heroe,
 }
 
-export const initialState = 0;
-export const heroInitialState: heroStateType = { heroes: [] }
+export const heroInitialState: heroStateType = { heroes: [], teamHeroes: {}, selectedHero: null }
  
-const _counterReducer = createReducer(
-  initialState,
-  on(increment, (state) => state + 1),
-  on(decrement, (state) => state - 1),
-  on(reset, (state) => 0)
-);
-
 const _heroReducer = createReducer(
   heroInitialState,
-  on(saveHeroes, (state, props) => {
-    return { ...state, heroes: props.payload}
-  })
+  on(
+    saveHeroes, 
+    addHeroTeam,
+    findHeroById, 
+    (state, { type, payload }) => {
+      switch (type) {
+        case '[Hero Component] SaveHeroes':
+          return {
+            ...state,
+            heroes: payload
+          };
+        case '[Hero Component] AddHeroes':
+          return {
+            ...state, 
+            teamHeroes: {
+              ...state.teamHeroes, 
+              [payload.heroId]: payload.color
+            }
+          };
+        case '[Hero Component] FindHero':
+          return {
+            ...state, 
+            selectedHero: payload
+          };
+      
+        default:
+          return { ...state };
+      }
+    }
+  ),
 );
  
-export function counterReducer(state, action) {
-  return _counterReducer(state, action);
-}
-
-export function heroReducer(state, action) {
+export function heroReducer(state: heroStateType, action) {
   return _heroReducer(state, action);
 }
