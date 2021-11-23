@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { NgModule, CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { ListadoHeroesRoutingModule } from './listado-heroes-routing.module';
@@ -22,6 +22,7 @@ import { HeroService } from '../../services/hero.service';
     FormsModule,
     ListadoHeroesRoutingModule
   ],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA],
   providers: [ HeroService ]
 })
 export class ListadoHeroesModule {}

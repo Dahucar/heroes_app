@@ -1,37 +1,33 @@
+import { CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { HttpClientModule } from '@angular/common/http'; 
-import { appRouting } from '../app/app.routing'; 
-
+import { HttpClientModule, HttpXhrBackend } from '@angular/common/http';
+import { appRouting } from '../app/app.routing';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 // store.
 import { StoreModule } from '@ngrx/store';
 import { heroReducer } from './store/heroes.reducer';
-
 // components.
 import { AppComponent } from './app.component';
-// import { ListadoDeHeroesComponent } from './components/listado-de-heroes/listado-de-heroes.component';
-// import { HeroProfileComponent } from './components/hero-profile/hero-profile.component';
-// import { ModalPollComponent } from './components/modal-poll/modal-poll.component';
-
 // services.
 import { HeroService } from './services/hero.service';
 
 @NgModule({
-  declarations: [
-    AppComponent,
-    // ListadoDeHeroesComponent,
-    // HeroProfileComponent,
-    // ModalPollComponent,
-  ],
+  declarations: [ AppComponent ],
   imports: [
-    BrowserModule, 
+    BrowserModule,
     StoreModule.forRoot({ heroes: heroReducer }),
     appRouting,
     FormsModule,
     HttpClientModule,
   ],
-  providers: [HeroService],
-  bootstrap: [AppComponent]
+  schemas: [CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA],
+  providers: [
+    HeroService,
+    // { provide: HttpXhrBackend, useClass: HttpClientTestingModule },
+    // { provide: Location, useClass: LocationMock },
+  ],
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}
