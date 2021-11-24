@@ -2,10 +2,12 @@ import { HttpClientModule, HttpXhrBackend } from '@angular/common/http';
 import { TestBed, inject } from '@angular/core/testing';
 import { StoreModule } from '@ngrx/store';
 import { HeroService } from './hero.service';
+import { HeroServiceMock } from './heroMock';
 import { heroReducer } from '../store/heroes.reducer';
 
 describe('HeroesService', () => {
-  // let service: HeroService;
+  let service: HeroService;
+  let heroServiceMock: HeroServiceMock;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
@@ -13,9 +15,16 @@ describe('HeroesService', () => {
         HttpClientModule,
         StoreModule.forRoot({ heroes: heroReducer }),
       ],
-      providers: [HeroService]
+      providers: [HeroService, HeroServiceMock]
       
     });
+    service = TestBed.inject(HeroService);
+    heroServiceMock = TestBed.inject(HeroServiceMock);
+  });
+
+  afterEach(() => { 
+    service = null;
+    heroServiceMock = null;
   });
 
   it('should be created', inject([HeroService], (service: HeroService) => {
@@ -29,6 +38,20 @@ describe('HeroesService', () => {
         expect(heroe.data.results[0].name).toEqual('Spiderman1');
       });
   }));
+
+  it('should test resetPager function', () => {
+    spyOn(service, 'resetPager').and.callThrough();
+    service.resetPager();
+    expect(service.resetPager).toHaveBeenCalled();
+    expect(service.resetPager).toBeDefined();
+  });
+
+  it('should test getTeamColor function', () => {
+    spyOn(service, 'getTeamColor').and.callThrough();
+    service.getTeamColor('');
+    expect(service.getTeamColor).toHaveBeenCalled();
+    expect(service.getTeamColor).toBeDefined();
+  });
 
   // it('should test getHeroes function', () => {
   //   spyOn(service, 'getHeroes').and.callThrough();

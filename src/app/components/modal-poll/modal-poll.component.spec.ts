@@ -33,4 +33,19 @@ describe('ModalPollComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
+  it('should test toggle_modal function', () => {
+    spyOn(component, 'toggle_modal').and.callThrough();
+    component.toggle_modal();
+    expect(component.toggle_modal).toHaveBeenCalled();
+    expect(component.toggle_modal).toBeDefined();
+  });
+
+  it('should test send_team function', () => {
+    spyOn(component, 'send_team').and.callThrough();
+    component.send_team('');
+    expect(component.send_team).toHaveBeenCalled();
+    expect(component.send_team).toBeDefined();
+  });
+
 });

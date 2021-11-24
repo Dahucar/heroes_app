@@ -38,4 +38,40 @@ describe('ListadoDeHeroesComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
+  it('should test submitSearch function', () => {
+    spyOn(component, 'submitSearch').and.callThrough();
+    component.submitSearch();
+    expect(component.submitSearch).toHaveBeenCalled();
+    expect(component.submitSearch).toBeDefined();
+  });
+
+  it('should test prevPage function', () => {
+    spyOn(component, 'prevPage').and.callThrough();
+    component.prevPage();
+    expect(component.prevPage).toHaveBeenCalled();
+    expect(component.prevPage).toBeDefined();
+  });
+
+  it('should test nextPage function', () => {
+    spyOn(component, 'nextPage').and.callThrough();
+    component.nextPage();
+    expect(component.nextPage).toHaveBeenCalled();
+    expect(component.nextPage).toBeDefined();
+  });
+
+  // TODO: error match route
+  it('should test go_to function', () => {
+    spyOn(component, 'go_to').and.callThrough();
+    component.go_to('');
+    expect(component.go_to).toHaveBeenCalled();
+    expect(component.go_to).toBeDefined();
+  });
+
+  // it('las funciones deben estar definidas', () => {
+  //   expect(component.submitSearch).toBeDefined();
+  //   expect(component.go_to).toBeDefined();
+  //   expect(component.nextPage).toBeDefined();
+  //   expect(component.prevPage).toBeDefined();
+  // });
 });
