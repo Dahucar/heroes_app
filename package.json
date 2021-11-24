@@ -22,6 +22,7 @@
     "@ngrx/store": "^10.1.2",
     "@nowzoo/sheetload": "0.0.7",
     "bootstrap": "^5.1.3",
+    "puppeteer": "^11.0.0",
     "rxjs": "~6.5.5",
     "tslib": "^2.0.0",
     "zone.js": "~0.10.3"
