@@ -14,5 +14,4 @@ describe('Test diccionarioDatos getters and setters.', () => {
         const heroe = new Heroe(id,name,description,modified,thumbnail,resourceURI, teamColor);
         expect(heroe).toBeTruthy(); 
     });
-
 });
