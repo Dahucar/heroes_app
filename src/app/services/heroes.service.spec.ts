@@ -5,7 +5,7 @@ import { HeroService } from './hero.service';
 import { heroReducer } from '../store/heroes.reducer';
 
 describe('HeroesService', () => {
-  // let service: HeroService;
+  let service: HeroService;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
@@ -16,6 +16,11 @@ describe('HeroesService', () => {
       providers: [HeroService]
       
     });
+    service = TestBed.inject(HeroService);
+  });
+
+  afterEach(() => { 
+    service = null;
   });
 
   it('should be created', inject([HeroService], (service: HeroService) => {
@@ -29,6 +34,20 @@ describe('HeroesService', () => {
         expect(heroe.data.results[0].name).toEqual('Spiderman1');
       });
   }));
+
+  it('should test resetPager function', () => {
+    spyOn(service, 'resetPager').and.callThrough();
+    service.resetPager();
+    expect(service.resetPager).toHaveBeenCalled();
+    expect(service.resetPager).toBeDefined();
+  });
+
+  it('should test getTeamColor function', () => {
+    spyOn(service, 'getTeamColor').and.callThrough();
+    service.getTeamColor('');
+    expect(service.getTeamColor).toHaveBeenCalled();
+    expect(service.getTeamColor).toBeDefined();
+  });
 
   // it('should test getHeroes function', () => {
   //   spyOn(service, 'getHeroes').and.callThrough();

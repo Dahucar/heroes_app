@@ -51,4 +51,25 @@ describe('HeroProfileComponent', () => {
     expect(component).toBeTruthy();
   });
 
+  it('should test getHeroService function', () => {
+    spyOn(component, 'getHeroService').and.callThrough();
+    component.getHeroService();
+    expect(component.getHeroService).toHaveBeenCalled();
+    expect(component.getHeroService).toBeDefined();
+  });
+
+  it('should test getTeam function', () => {
+    spyOn(component, 'getTeam').and.callThrough();
+    component.getTeam('');
+    expect(component.getTeam).toHaveBeenCalled();
+    expect(component.getTeam).toBeDefined();
+  });
+
+  it('should test launchModal function', () => {
+    spyOn(component, 'launchModal').and.callThrough();
+    component.launchModal();
+    expect(component.launchModal).toHaveBeenCalled();
+    expect(component.launchModal).toBeDefined();
+  });
+
 });
