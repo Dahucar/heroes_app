@@ -1,4 +1,4 @@
-import { async, ComponentFixture, ComponentFixtureAutoDetect, TestBed } from '@angular/core/testing';
+import { async, ComponentFixture, ComponentFixtureAutoDetect, inject, TestBed } from '@angular/core/testing';
 import { StoreModule } from '@ngrx/store';
 import { heroReducer } from '../../store/heroes.reducer';
 import { CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA } from '@angular/core';
@@ -9,6 +9,10 @@ import { HeroServiceMock } from '../../services/heroMock';
 
 import { HeroProfileComponent } from './hero-profile.component';
 import { RouterModule } from '@angular/router';
+
+class LocationMock {
+  back():void {}
+}
 
 describe('HeroProfileComponent', () => {
   let component: HeroProfileComponent;
@@ -26,7 +30,8 @@ describe('HeroProfileComponent', () => {
       declarations: [ HeroProfileComponent ],
       providers: [
         { provide: ComponentFixtureAutoDetect, useValue: true },
-        { provide: HeroService, useClass: HeroServiceMock }
+        { provide: HeroService, useClass: HeroServiceMock },
+        { provide: Location, useClass: LocationMock},
       ],
       schemas: [ CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA ]
     })
