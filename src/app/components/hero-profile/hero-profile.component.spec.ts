@@ -72,4 +72,11 @@ describe('HeroProfileComponent', () => {
     expect(component.launchModal).toBeDefined();
   });
 
+  it('should test goBack function', () => {
+    spyOn(component, 'goBack').and.callThrough();
+    component.goBack();
+    expect(component.goBack).toHaveBeenCalled();
+    expect(component.goBack).toBeDefined();
+  });
+
 });

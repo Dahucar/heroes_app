@@ -42,6 +42,10 @@ describe('ModalPollComponent', () => {
   });
 
   it('should test send_team function', () => {
+    spyOn(component, 'send_team').and.callThrough();
+    component.send_team('');
+    expect(component.send_team).toHaveBeenCalled();
     expect(component.send_team).toBeDefined();
   });
+
 });
