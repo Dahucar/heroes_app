@@ -2,13 +2,15 @@ import { async, ComponentFixture, ComponentFixtureAutoDetect, inject, TestBed } 
 import { StoreModule } from '@ngrx/store';
 import { heroReducer } from '../../store/heroes.reducer';
 import { CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA } from '@angular/core';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { RouterTestingModule } from "@angular/router/testing";
 import { HeroService } from '../../services/hero.service';
 import { HeroServiceMock } from '../../services/heroMock';
 
 import { HeroProfileComponent } from './hero-profile.component';
 import { RouterModule } from '@angular/router';
+import { ModalPollComponent } from '../modal-poll/modal-poll.component';
+import { Heroe } from 'src/app/models/hero';
 
 class LocationMock {
   back():void {}
@@ -23,12 +25,15 @@ describe('HeroProfileComponent', () => {
     TestBed.configureTestingModule({
       imports: [
         HttpClientModule,
-        RouterTestingModule,
+        RouterTestingModule.withRoutes(
+          [{path: 'heroe/:id', component: HeroProfileComponent}]
+        ),
         StoreModule.forRoot({ heroes: heroReducer }),
         RouterModule.forRoot([])
       ],
-      declarations: [ HeroProfileComponent ],
+      declarations: [ HeroProfileComponent, ModalPollComponent ],
       providers: [
+        HeroService,HeroServiceMock,
         { provide: ComponentFixtureAutoDetect, useValue: true },
         { provide: HeroService, useClass: HeroServiceMock },
         { provide: Location, useClass: LocationMock},
@@ -36,15 +41,14 @@ describe('HeroProfileComponent', () => {
       schemas: [ CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA ]
     })
     .compileComponents();
-
-    heroesService = TestBed.inject(HeroService);
   }));
 
   beforeEach(() => {
     fixture = TestBed.createComponent(HeroProfileComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
-    heroesService = null;
+    heroesService = TestBed.inject(HeroService);
+    // heroesService = null;
   });
 
   it('should create', () => {
@@ -60,7 +64,8 @@ describe('HeroProfileComponent', () => {
 
   it('should test getTeam function', () => {
     spyOn(component, 'getTeam').and.callThrough();
-    component.getTeam('');
+    component.heroe = new Heroe('1', '', '', new Date(), '', '', '');
+    component.getTeam('1011334');
     expect(component.getTeam).toHaveBeenCalled();
     expect(component.getTeam).toBeDefined();
   });

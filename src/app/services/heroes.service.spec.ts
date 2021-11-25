@@ -53,6 +53,13 @@ describe('HeroesService', () => {
     expect(service.getTeamColor).toBeDefined();
   });
 
+  it('should test getHeroe function toBeDefined', () => {
+    spyOn(heroServiceMock, 'getHeroe').and.callThrough();
+    heroServiceMock.getHeroe();
+    expect(heroServiceMock.getHeroe).toHaveBeenCalled();
+    expect(heroServiceMock.getHeroe).toBeDefined();
+  });
+
   // it('should test getHeroes function', () => {
   //   spyOn(service, 'getHeroes').and.callThrough();
   //   service.getHeroes();
