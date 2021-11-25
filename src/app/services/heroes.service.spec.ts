@@ -60,11 +60,18 @@ describe('HeroesService', () => {
     expect(heroServiceMock.getHeroe).toBeDefined();
   });
 
-  // it('should test getHeroes function', () => {
-  //   spyOn(service, 'getHeroes').and.callThrough();
-  //   service.getHeroes();
-  //   expect(service.getHeroes).toHaveBeenCalled();
-  //   expect(service.getHeroes).toBeDefined();
-  // });
+  it('should test getTeamColor function toBeDefined', () => {
+    spyOn(heroServiceMock, 'getTeamColor').and.callThrough();
+    heroServiceMock.getTeamColor();
+    expect(heroServiceMock.getTeamColor).toHaveBeenCalled();
+    expect(heroServiceMock.getTeamColor).toBeDefined();
+  });
 
+  it('should test getHeroes function', () => {
+    spyOn(service, 'getHeroes').and.callThrough();
+    service.getHeroes();
+    expect(service.getHeroes).toHaveBeenCalled();
+    expect(service.getHeroes).toBeDefined();
+    expect(service.total).toEqual(0);
+  });
 });
